@@ -16,7 +16,7 @@
 (define-key global-map "\C-cc" 'org-capture)
 (setq org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
 (setq org-todo-keywords
-      '((sequence "BKLG(b)" "TODO(t!)" "INPR(i!)" "|" "DONE(d!)" "CNCL(c@/!)")) )
+      '((sequence "BKLG(b)" "TODO(t!)" "|" "DONE(d!)" "CNCL(c@/!)")) )
 (setq org-directory (concat (getenv "HOME") "/Documents/org"))
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 (setq org-log-into-drawer t)
@@ -28,20 +28,20 @@
 			 (concat org-directory "/code.org") ))
 
 (setq org-capture-templates
-      '(("w" "Work" entry (file+headline (concat org-directory "/work.org") "Tasks")
-         "* TODO %?\n  %U\n  %a"
+      '(("w" "Work" entry (file+headline "~/Documents/org/work.org" "Tasks")
+         "* BKLG %?\n  SCHEDULED: %t\n"
          :empty-lines 1)
 
         ("c" "Code" entry (file+headline "~/Documents/org/code.org" "Tasks")
-         "* TODO %?\n  %U\n  %a"
+         "* BKLG %?\n  %a\n"
          :empty-lines 1)
 
         ("h" "Chore" entry (file+headline "~/Documents/org/chores.org" "Tasks")
-         "* TODO %?\n  SCHEDULED: %t\n  %U"
+         "* BKLG %?\n  SCHEDULED: %t\n"
          :empty-lines 1)
 
         ("l" "Leisure" entry (file+headline "~/Documents/org/leisure.org" "Activities")
-         "* %?\n  %U"
+         "* BKLG %?\n  SCHEDULED: %t\n"
          :empty-lines 1)
 
         ("j" "Journal" entry (file+datetree "~/Documents/org/journal.org")
@@ -49,10 +49,15 @@
          :empty-lines 1)
 
         ("n" "Note" entry (file+headline "~/Documents/org/notes.org" "Inbox")
-         "* %?\n  %U\n  %i\n  %a"
+         "* %?\n  %i\n  %a"
          :empty-lines 1)))
 
-; steal from https://github.com/MooersLab/emacs-simple-init-org/blob/fb8b922e355cc3ce70c0e72d59028673f19cb43d/init.el#L1829C1-L1843C17?
+(setq org-agenda-custom-commands
+      '(("b" "Backlog items"
+         todo "BKLG"
+         ((org-agenda-overriding-header "Backlog")))))
+
+					; steal from https://github.com/MooersLab/emacs-simple-init-org/blob/fb8b922e355cc3ce70c0e72d59028673f19cb43d/init.el#L1829C1-L1843C17?
 
 ; Org Babel Geiser Guile setup
 (org-babel-do-load-languages
